@@ -1,0 +1,131 @@
+.productContainer {
+    padding: var(--spacing-md) 0 var(--spacing-xl);
+    background-color: var(--bg-primary);
+}
+
+.backLink {
+    display: inline-block;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.backLink:hover {
+    color: var(--text-primary);
+}
+
+.productGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    align-items: center;
+}
+
+.imageColumn {
+    position: sticky;
+    top: 100px;
+}
+
+.mainImage {
+    width: 100%;
+    border-radius: var(--radius-md);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    object-fit: contain;
+    background-color: #fff;
+    padding: 2rem;
+    aspect-ratio: 1;
+}
+
+.infoColumn {
+    padding-top: var(--spacing-lg);
+}
+
+.productTitle {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.1;
+}
+
+.hotBadge {
+    display: inline-block;
+    background: linear-gradient(135deg, #e05c42, #c0392b);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: var(--spacing-sm);
+    box-shadow: 0 2px 10px rgba(224, 92, 66, 0.35);
+}
+
+.productDescription {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-lg);
+}
+
+.featuresList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: var(--spacing-xl);
+    padding: 1.5rem;
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+}
+
+.feature {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.amazonNotice {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .productGrid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    .imageColumn {
+        position: relative;
+        top: 0;
+    }
+
+    .mainImage {
+        padding: 0.5rem;
+    }
+
+    .infoColumn {
+        padding-top: 0;
+    }
+
+    .productTitle {
+        font-size: 2rem;
+    }
+
+    .actions {
+        position: sticky;
+        bottom: 0;
+        background: var(--bg-primary);
+        padding: 1rem 0;
+        margin-top: 2rem;
+        border-top: 1px solid rgba(112, 107, 97, 0.1);
+        z-index: 10;
+    }
+}

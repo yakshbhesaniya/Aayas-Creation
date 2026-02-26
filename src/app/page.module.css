@@ -1,0 +1,405 @@
+.section {
+  padding: var(--spacing-xl) 0;
+}
+
+/* Hero Section */
+.hero {
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-secondary);
+  background-image: linear-gradient(rgba(253, 251, 247, 0.88), rgba(253, 251, 247, 0.92)), url('https://images.unsplash.com/photo-1599643477874-ce4eb81585ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  padding: 0 var(--spacing-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Floating earring backdrop */
+.heroBg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* All floating elements share a base style */
+.floatEl {
+  position: absolute;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  animation: floatUp 7s ease-in-out infinite;
+  --rot: 0deg;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0px) rotate(var(--rot));
+  }
+
+  50% {
+    transform: translateY(-18px) rotate(calc(var(--rot) + 8deg));
+  }
+
+  100% {
+    transform: translateY(0px) rotate(var(--rot));
+  }
+}
+
+/* Individual scatter positions + staggered delays & rotations */
+.f1 {
+  top: 8%;
+  left: 5%;
+  animation-delay: 0s;
+  animation-duration: 6.5s;
+  --rot: -15deg;
+}
+
+.f2 {
+  top: 65%;
+  left: 3%;
+  animation-delay: 1.2s;
+  animation-duration: 7.8s;
+  --rot: 25deg;
+}
+
+.f3 {
+  top: 15%;
+  left: 20%;
+  animation-delay: 0.5s;
+  animation-duration: 8.2s;
+  --rot: 10deg;
+}
+
+.f4 {
+  top: 75%;
+  left: 18%;
+  animation-delay: 2.1s;
+  animation-duration: 6.9s;
+  --rot: -30deg;
+}
+
+.f5 {
+  top: 40%;
+  left: 50%;
+  animation-delay: 3.0s;
+  animation-duration: 9.1s;
+  --rot: 20deg;
+}
+
+.f6 {
+  top: 5%;
+  left: 72%;
+  animation-delay: 0.8s;
+  animation-duration: 7.4s;
+  --rot: -8deg;
+}
+
+.f7 {
+  top: 55%;
+  left: 80%;
+  animation-delay: 1.7s;
+  animation-duration: 8.6s;
+  --rot: 35deg;
+}
+
+.f8 {
+  top: 82%;
+  left: 65%;
+  animation-delay: 2.5s;
+  animation-duration: 7.1s;
+  --rot: -20deg;
+}
+
+.f9 {
+  top: 30%;
+  left: 90%;
+  animation-delay: 0.3s;
+  animation-duration: 6.3s;
+  --rot: 12deg;
+}
+
+
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+
+.heroContent h1 {
+  font-size: clamp(3rem, 6vw, 5rem);
+  letter-spacing: -1px;
+}
+
+.heroContent p {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+}
+
+.ctaGroup {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* About Section */
+.about {
+  background-color: var(--bg-primary);
+}
+
+.aboutGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+.aboutImageContainer {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+}
+
+.aboutImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.aboutText h2 {
+  font-size: 2.5rem;
+}
+
+.aboutText p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+/* Product Gallery */
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  text-align: left;
+}
+
+.productCard {
+  background: #fff;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.productCard:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(224, 92, 66, 0.15);
+  border: 1px solid rgba(224, 92, 66, 0.1);
+}
+
+.productImageWrapper {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background-color: var(--bg-secondary);
+}
+
+.hotBadge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  background: linear-gradient(135deg, #e05c42, #c0392b);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 4px 10px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(224, 92, 66, 0.45);
+  pointer-events: none;
+}
+
+.hotCard {
+  border: 1.5px solid rgba(224, 92, 66, 0.25);
+}
+
+.productImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 1.5rem;
+  background-color: #fff;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.productCard:hover .productImage {
+  transform: scale(1.1);
+}
+
+.productInfo {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.productInfo h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.productInfo p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.buyBtn {
+  width: 100%;
+  margin-bottom: 0.8rem;
+}
+
+.detailsLink {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-decoration: underline;
+}
+
+.detailsLink:hover {
+  color: var(--text-primary);
+}
+
+/* Why Handmade */
+.whyHandmade {
+  background-color: var(--bg-secondary);
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.featureItem h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent-terracotta);
+}
+
+.featureItem p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+/* Bulk Orders */
+.bulkGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+.bulkText h2 {
+  font-size: 2.5rem;
+}
+
+.bulkText ul {
+  list-style: none;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bulkFormContainer {
+  background-color: #fff;
+  padding: 2.5rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+}
+
+.bulkForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.bulkForm input,
+.bulkForm textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid rgba(112, 107, 97, 0.2);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  background-color: var(--bg-primary);
+}
+
+.bulkForm input:focus,
+.bulkForm textarea:focus {
+  outline: none;
+  border-color: var(--accent-terracotta);
+}
+
+.bulkForm button {
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+
+  .aboutGrid,
+  .bulkGrid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  .ctaGroup {
+    flex-direction: column;
+  }
+
+  /* Hide crowded vectors on mobile — keep only 3 for a clean look */
+  .f2,
+  .f3,
+  .f4,
+  .f5,
+  .f7,
+  .f9 {
+    display: none;
+  }
+
+  /* Scale down the 3 remaining vectors on mobile */
+  .f1 {
+    width: 110px !important;
+    height: 110px !important;
+    top: 5%;
+    left: 2%;
+  }
+
+  .f6 {
+    width: 120px !important;
+    height: 120px !important;
+    top: 4%;
+    left: 68%;
+  }
+
+  .f8 {
+    width: 100px !important;
+    height: 100px !important;
+    top: 72%;
+    left: 60%;
+  }
+}

@@ -1,0 +1,78 @@
+.footer {
+    background-color: var(--bg-secondary);
+    padding: var(--spacing-lg) 0 0;
+    border-top: 1px solid rgba(112, 107, 97, 0.1);
+    color: var(--text-primary);
+}
+
+.footerGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+}
+
+.footerBrand {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.brandInfo p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.socialLinks {
+    display: flex;
+    gap: 1rem;
+}
+
+.socialLinks a {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.linksBlock h4 {
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.linksBlock ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.linksBlock a {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    transition: color 0.3s;
+}
+
+.linksBlock a:hover {
+    color: var(--accent-terracotta);
+}
+
+.footerBottom {
+    text-align: center;
+    padding: var(--spacing-md) 0;
+    border-top: 1px solid rgba(112, 107, 97, 0.1);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+    .footerGrid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+        text-align: center;
+    }
+
+    .socialLinks {
+        justify-content: center;
+    }
+}
