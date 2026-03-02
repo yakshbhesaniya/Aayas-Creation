@@ -3,14 +3,14 @@ import styles from './Footer.module.css';
 
 export default function Footer() {
     return (
-        <footer className={styles.footer}>
+        <footer id="contact" className={styles.footer}>
             <div className={`container ${styles.footerGrid}`}>
                 <div className={styles.brandInfo}>
                     <h3 className={styles.footerBrand}>Aayas Creation</h3>
                     <p>Handmade Earrings. Crafted with Soul.</p>
                     <div className={styles.socialLinks}>
                         <a href="https://www.instagram.com/aayascreation/" target="_blank" rel="noopener noreferrer">Instagram</a>
-                        {/* <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer">Pinterest</a> */}
+                        <a href="https://www.facebook.com/aayascreation/" target="_blank" rel="noopener noreferrer">Facebook</a>
                     </div>
                 </div>
 

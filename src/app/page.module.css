@@ -316,13 +316,27 @@
   font-size: 2.5rem;
 }
 
-.bulkText ul {
+.perksList {
   list-style: none;
   font-size: 1.1rem;
   color: var(--text-secondary);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.contactDirect {
+  padding-top: 2rem;
+  border-top: 1px solid rgba(112, 107, 97, 0.2);
+  margin-top: 2rem;
+}
+
+.contactDirect p {
+  font-size: 1.05rem;
+}
+
+.contactDirect a:hover {
+  color: var(--accent-terracotta);
 }
 
 .bulkFormContainer {
