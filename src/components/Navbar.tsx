@@ -11,6 +11,13 @@ export default function Navbar() {
 
   return (
     <header className={styles.header}>
+      <div className={styles.topBar}>
+        <div className={styles.topBarContent}>
+          <a href="tel:+919104861625" className={styles.contactLink}>📞 +91 9104861625</a>
+          <span className={styles.topBarDivider}>|</span>
+          <a href="mailto:aayascreation@gmail.com" className={styles.contactLink}>✉️ aayascreation@gmail.com</a>
+        </div>
+      </div>
       <nav className={styles.nav}>
         <div className={styles.logo}>
           <Link href="/">Aayas Creation</Link>

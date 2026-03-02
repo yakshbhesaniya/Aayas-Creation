@@ -9,6 +9,44 @@
     border-bottom: 1px solid rgba(112, 107, 97, 0.1);
 }
 
+.topBar {
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-family: var(--font-body);
+}
+
+.topBarContent {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+}
+
+.contactLink {
+    color: inherit;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.contactLink:hover {
+    opacity: 0.8;
+}
+
+.topBarDivider {
+    opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+    .topBarContent {
+        justify-content: center;
+        font-size: 0.75rem;
+    }
+}
+
 .nav {
     display: flex;
     justify-content: space-between;
