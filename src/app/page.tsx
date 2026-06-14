@@ -2,8 +2,53 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./page.module.css";
 import ProductCard from "@/components/ProductCard";
+import JsonLd from "@/components/JsonLd";
 import { getFeaturedProducts } from "@/lib/products";
 import { getCategories } from "@/lib/categories";
+import { websiteSchema, faqSchema } from "@/lib/seo";
+
+export const HOME_FAQS = [
+  {
+    q: "What is Aayas Creation?",
+    a: "Aayas Creation is a handmade artisan earrings brand based in Ahmedabad, Gujarat, India. We design and craft small-batch ethnic and bohemian earrings by hand and sell them through our official Amazon store.",
+  },
+  {
+    q: "Are Aayas Creation earrings really handmade?",
+    a: "Yes. Every pair is individually conceptualized, shaped and detailed by hand by skilled artisans in small batches. We do not mass-produce on machines, so no two pairs are exactly alike.",
+  },
+  {
+    q: "Where are the earrings made?",
+    a: "All Aayas Creation earrings are handcrafted in Ahmedabad, Gujarat, India, supporting local artisan talent and traditional craft.",
+  },
+  {
+    q: "What styles of earrings do you offer?",
+    a: "Our handmade collection includes boho drop and dangle earrings, traditional Indian jhumkas, cowrie shell earrings, fabric earrings, beaded earrings, terracotta-style earrings and festival earrings.",
+  },
+  {
+    q: "Are the earrings lightweight and comfortable?",
+    a: "Yes. Our earrings are designed to be featherlight and comfortable for all-day and long festive wear, without the weight or irritation of heavy metal jewelry.",
+  },
+  {
+    q: "Where can I buy Aayas Creation earrings?",
+    a: "Aayas Creation earrings are sold exclusively through our official Amazon India store, where checkout, payment and delivery are handled securely.",
+  },
+  {
+    q: "Do you offer wholesale or bulk orders?",
+    a: "Yes. We supply boutiques, resellers and wedding planners with wholesale pricing, customization options and reliable shipping. You can submit a wholesale enquiry through our Wholesale page.",
+  },
+  {
+    q: "Are the earrings suitable for gifting and festivals?",
+    a: "Absolutely. Each pair arrives as a small work of art, making it a thoughtful gift, and many designs are crafted specifically for festivals, weddings and ethnic celebrations.",
+  },
+  {
+    q: "Do you ship across India?",
+    a: "Yes. Because orders are fulfilled through Amazon India, our handmade earrings ship across India with Amazon's standard delivery and tracking.",
+  },
+  {
+    q: "How do I care for handmade earrings?",
+    a: "Keep your handmade earrings dry, store them away from direct moisture and perfume, and handle the beadwork and threadwork gently to preserve their finish and longevity.",
+  },
+];
 
 const VALUES = [
   { n: "01", t: "No Mass Production", d: "Every pair is conceived and finished by hand in small batches — never stamped out by a machine." },
@@ -18,6 +63,8 @@ export default function Home() {
 
   return (
     <>
+      <JsonLd data={[websiteSchema(), faqSchema(HOME_FAQS)]} />
+
       {/* ---------- HERO ---------- */}
       <section className={styles.hero}>
         <div className={styles.heroVectors} aria-hidden="true">
@@ -107,7 +154,12 @@ export default function Home() {
           <div className={`${styles.storyCopy} reveal`}>
             <p className="eyebrow">The Story</p>
             <h2 className={styles.storyTitle}>Every piece tells a story of authentic Indian craftsmanship.</h2>
-            <p className="mt-md text-secondary">
+            <p className="mt-md">
+              Aayas Creation is a handmade artisan earrings brand based in Ahmedabad,
+              Gujarat, India, crafting small-batch ethnic and bohemian earrings sold through
+              its official Amazon store.
+            </p>
+            <p className="mt-sm text-secondary">
               Our earrings are never factory-produced. They are individually conceptualized,
               gently crafted, and carefully detailed by skilled artisans who pour patience
               and personality into every pair.
@@ -203,6 +255,35 @@ export default function Home() {
                 <h3>{v.t}</h3>
                 <p>{v.d}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- FAQ ---------- */}
+      <section className="section" style={{ background: "var(--bg-secondary)" }}>
+        <div className={`container ${styles.faqWrap}`}>
+          <div className={`${styles.faqIntro} reveal`}>
+            <p className="eyebrow">Good to Know</p>
+            <h2 className={styles.faqTitle}>Frequently asked questions.</h2>
+            <p className="mt-sm text-secondary">
+              Everything you might want to know about our handmade earrings, where they&apos;re
+              made, and how to buy.
+            </p>
+            <Link href="/contact" className="link-arrow" style={{ marginTop: "1.6rem" }}>
+              Still have a question?
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </Link>
+          </div>
+          <div className={`${styles.faqList} reveal`}>
+            {HOME_FAQS.map((f) => (
+              <details key={f.q} className={styles.faqItem} name="home-faq">
+                <summary>
+                  {f.q}
+                  <span className={styles.faqIcon} aria-hidden="true" />
+                </summary>
+                <p>{f.a}</p>
+              </details>
             ))}
           </div>
         </div>

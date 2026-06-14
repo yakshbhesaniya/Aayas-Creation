@@ -4,11 +4,13 @@
 //
 // Add or edit products in products.json and the collections update themselves.
 import productsData from "@/data/products.json";
+import { LONG_DESCRIPTIONS } from "@/data/longDescriptions";
 
 export interface Product {
   id: string;
   name: string;
   description: string;
+  longDescription?: string;
   amazonUrl: string;
   slug: string;
   image: string;
@@ -150,7 +152,10 @@ const DEFS: CategoryDef[] = [
   },
 ];
 
-const products = productsData as Product[];
+const products = (productsData as Product[]).map((p) => ({
+  ...p,
+  longDescription: LONG_DESCRIPTIONS[p.slug] || p.description,
+}));
 
 // Build categories, assigning each product to the first definition it matches.
 // Only categories with at least 2 products become pages (avoids thin SEO pages).

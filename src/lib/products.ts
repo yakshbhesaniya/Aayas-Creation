@@ -1,9 +1,11 @@
 import productsData from "@/data/products.json";
+import { LONG_DESCRIPTIONS } from "@/data/longDescriptions";
 
 export interface Product {
   id: string;
   name: string;
   description: string;
+  longDescription?: string;
   amazonUrl: string;
   slug: string;
   image: string;
@@ -11,7 +13,10 @@ export interface Product {
   hot?: boolean;
 }
 
-const products = productsData as Product[];
+const products = (productsData as Product[]).map((p) => ({
+  ...p,
+  longDescription: LONG_DESCRIPTIONS[p.slug] || p.description,
+}));
 
 export function getAllProducts(): Product[] {
   return products;

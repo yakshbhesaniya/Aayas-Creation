@@ -1,11 +1,13 @@
 import { Metadata } from "next";
 import { SITE_URL } from "@/lib/site";
+import { alternates } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
     "Privacy Policy for Aayas Creation — how we collect, use, and protect your information.",
-  alternates: { canonical: `${SITE_URL}/privacy` },
+  alternates: alternates("/privacy"),
+  robots: { index: true, follow: true },
 };
 
 export default function PrivacyPage() {

@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { SITE_URL } from "@/lib/site";
+import JsonLd from "@/components/JsonLd";
+import { abs, alternates, breadcrumbSchema } from "@/lib/seo";
 import styles from "./about.module.css";
 
 export const metadata: Metadata = {
-  title: "Our Story",
+  title: "Our Story — Handmade Earrings, Ahmedabad",
   description:
     "The story of Aayas Creation — handmade artisan earrings crafted in Ahmedabad, India. Discover our philosophy of soulful, small-batch, lightweight design.",
-  alternates: { canonical: `${SITE_URL}/about` },
+  alternates: alternates("/about"),
   openGraph: {
     title: "Our Story | Aayas Creation",
     description:
       "Handmade artisan earrings crafted in Ahmedabad, India — soulful, small-batch, lightweight design.",
-    url: `${SITE_URL}/about`,
+    url: abs("/about"),
     type: "website",
   },
 };
@@ -35,6 +36,12 @@ const STATS = [
 export default function AboutPage() {
   return (
     <>
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Our Story", path: "/about" },
+        ])}
+      />
       <section className={styles.hero}>
         <div className="container">
           <p className="eyebrow reveal">Our Story</p>

@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
 import BulkOrderForm from "@/components/BulkOrderForm";
-import { SITE_URL } from "@/lib/site";
+import JsonLd from "@/components/JsonLd";
+import { abs, alternates, breadcrumbSchema } from "@/lib/seo";
 import styles from "./wholesale.module.css";
 
 export const metadata: Metadata = {
-  title: "Wholesale & Bulk Orders",
+  title: "Wholesale Earrings Supplier in India | Bulk Orders",
   description:
-    "Stock Aayas Creation handmade earrings in your boutique. Wholesale pricing, customization and reliable shipping for resellers, boutiques and wedding planners. Enquire now.",
-  alternates: { canonical: `${SITE_URL}/wholesale` },
+    "Wholesale handmade earrings supplier in Ahmedabad, India. Aayas Creation offers bulk pricing, customization and reliable shipping for boutiques, resellers and wedding planners. Enquire now.",
+  alternates: alternates("/wholesale"),
   openGraph: {
     title: "Wholesale & Bulk Orders | Aayas Creation",
     description:
-      "Wholesale pricing, customization and reliable shipping for boutiques, resellers and wedding planners.",
-    url: `${SITE_URL}/wholesale`,
+      "Wholesale handmade-earrings pricing, customization and reliable shipping for boutiques, resellers and wedding planners across India and worldwide.",
+    url: abs("/wholesale"),
     type: "website",
   },
 };
@@ -26,6 +27,12 @@ const PERKS = [
 export default function WholesalePage() {
   return (
     <>
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Wholesale", path: "/wholesale" },
+        ])}
+      />
       <section className={styles.hero}>
         <div className="container">
           <p className="eyebrow reveal">For Boutiques &amp; Resellers</p>

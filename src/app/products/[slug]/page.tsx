@@ -3,8 +3,9 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import ProductGallery from '@/components/ProductGallery';
 import ProductCard from '@/components/ProductCard';
+import JsonLd from '@/components/JsonLd';
 import { getAllProducts, getProduct, getRelatedProducts } from '@/lib/products';
-import { SITE_URL } from '@/lib/site';
+import { abs, alternates, productSchema, breadcrumbSchema } from '@/lib/seo';
 import styles from './page.module.css';
 
 export async function generateStaticParams() {
@@ -17,17 +18,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
     if (!product) return { title: 'Product Not Found' };
 
-    const url = `${SITE_URL}/products/${product.slug}`;
+    // Complete, standalone factual meta description (~150-160 chars).
+    const metaDesc = `${product.description} Handmade in Ahmedabad, India by Aayas Creation — shop this artisan earring design on Amazon.`;
 
     return {
         // Bare name only — the root layout's title template appends "| Aayas Creation".
         title: product.name,
-        description: product.description,
-        alternates: { canonical: url },
+        description: metaDesc,
+        alternates: alternates(`/products/${product.slug}`),
         openGraph: {
-            title: product.name,
-            description: product.description,
-            url,
+            title: `${product.name} | Handmade Artisan Earrings`,
+            description: product.longDescription || metaDesc,
+            url: abs(`/products/${product.slug}`),
             type: 'website',
             images: [product.image],
         },
@@ -49,25 +51,17 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
     const related = getRelatedProducts(slug, 3);
 
-    const jsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'Product',
-        name: product.name,
-        image: product.gallery || [product.image],
-        description: product.description,
-        brand: { '@type': 'Brand', name: 'Aayas Creation' },
-        offers: {
-            '@type': 'Offer',
-            availability: 'https://schema.org/InStock',
-            url: product.amazonUrl,
-        },
-    };
-
     return (
         <>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            <JsonLd
+                data={[
+                    productSchema(product),
+                    breadcrumbSchema([
+                        { name: 'Home', path: '/' },
+                        { name: 'Shop', path: '/shop' },
+                        { name: product.name, path: `/products/${product.slug}` },
+                    ]),
+                ]}
             />
 
             <div className={styles.wrap}>
@@ -88,7 +82,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                         <div className={styles.info}>
                             {product.hot && <span className={styles.badge}>Bestseller</span>}
                             <h1 className={styles.title}>{product.name}</h1>
-                            <p className={styles.desc}>{product.description}</p>
+                            <p className={styles.desc}>{product.longDescription}</p>
 
                             <ul className={styles.features}>
                                 {FEATURES.map((f) => (

@@ -2,7 +2,8 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getCategories, getCategory } from "@/lib/categories";
-import { SITE_URL } from "@/lib/site";
+import { abs, alternates, breadcrumbSchema } from "@/lib/seo";
+import JsonLd from "@/components/JsonLd";
 import ProductCard from "@/components/ProductCard";
 import styles from "./collection.module.css";
 
@@ -19,14 +20,14 @@ export async function generateMetadata({
   const cat = getCategory(category);
   if (!cat) return { title: "Collection Not Found" };
 
-  const url = `${SITE_URL}/collections/${cat.slug}`;
+  const url = abs(`/collections/${cat.slug}`);
   return {
     // metaTitle already includes the brand ("… — Aayas Creation"), so use absolute
     // to bypass the root layout's "%s | Aayas Creation" template (avoids double brand).
     title: { absolute: cat.metaTitle },
     description: cat.metaDescription,
     keywords: cat.keywords,
-    alternates: { canonical: url },
+    alternates: alternates(`/collections/${cat.slug}`),
     openGraph: {
       title: cat.metaTitle,
       description: cat.metaDescription,
@@ -46,12 +47,12 @@ export default async function CollectionPage({
   const cat = getCategory(category);
   if (!cat) notFound();
 
-  const jsonLd = {
+  const collectionSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: cat.title,
     description: cat.metaDescription,
-    url: `${SITE_URL}/collections/${cat.slug}`,
+    url: abs(`/collections/${cat.slug}`),
     mainEntity: {
       "@type": "ItemList",
       itemListElement: cat.products.map((p, i) => ({
@@ -61,12 +62,13 @@ export default async function CollectionPage({
           "@type": "Product",
           name: p.name,
           image: p.image,
-          description: p.description,
-          url: `${SITE_URL}/products/${p.slug}`,
+          description: p.longDescription || p.description,
+          url: abs(`/products/${p.slug}`),
           brand: { "@type": "Brand", name: "Aayas Creation" },
           offers: {
             "@type": "Offer",
             availability: "https://schema.org/InStock",
+            priceCurrency: "INR",
             url: p.amazonUrl,
           },
         },
@@ -76,9 +78,15 @@ export default async function CollectionPage({
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      <JsonLd
+        data={[
+          collectionSchema,
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Shop", path: "/shop" },
+            { name: cat.title, path: `/collections/${cat.slug}` },
+          ]),
+        ]}
       />
 
       <header className={styles.head}>

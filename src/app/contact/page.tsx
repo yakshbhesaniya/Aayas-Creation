@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SITE_URL } from "@/lib/site";
+import JsonLd from "@/components/JsonLd";
+import { abs, alternates, breadcrumbSchema } from "@/lib/seo";
 import styles from "./contact.module.css";
 
 export const metadata: Metadata = {
-  title: "Contact Us",
+  title: "Contact Aayas Creation — Ahmedabad, India",
   description:
     "Get in touch with Aayas Creation — handmade artisan earrings from Ahmedabad, India. Call, WhatsApp or email us for orders, wholesale and enquiries.",
-  alternates: { canonical: `${SITE_URL}/contact` },
+  alternates: alternates("/contact"),
   openGraph: {
     title: "Contact Us | Aayas Creation",
     description: "Call, WhatsApp or email Aayas Creation for orders, wholesale and enquiries.",
-    url: `${SITE_URL}/contact`,
+    url: abs("/contact"),
     type: "website",
   },
 };
@@ -40,6 +41,12 @@ const METHODS = [
 export default function ContactPage() {
   return (
     <>
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Contact", path: "/contact" },
+        ])}
+      />
       <section className={styles.hero}>
         <div className="container">
           <p className="eyebrow reveal">Get in Touch</p>

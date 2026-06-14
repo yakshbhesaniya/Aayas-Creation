@@ -1,20 +1,21 @@
 import type { Metadata } from "next";
 import { getAllProducts } from "@/lib/products";
 import { getCategories } from "@/lib/categories";
-import { SITE_URL } from "@/lib/site";
+import { abs, alternates, breadcrumbSchema, itemListSchema } from "@/lib/seo";
+import JsonLd from "@/components/JsonLd";
 import ShopClient from "./ShopClient";
 import styles from "./shop.module.css";
 
 export const metadata: Metadata = {
-  title: "Shop Handmade Earrings",
+  title: "Shop Handmade Earrings Online in India",
   description:
-    "Browse the full collection of handmade artisan earrings by Aayas Creation — boho drops, jhumkas, cowrie shell, fabric, beaded and festival styles. Buy on Amazon.",
-  alternates: { canonical: `${SITE_URL}/shop` },
+    "Browse the full collection of handmade artisan earrings by Aayas Creation — boho drops, jhumkas, cowrie shell, fabric, beaded and festival styles. Handcrafted in India, buy on Amazon.",
+  alternates: alternates("/shop"),
   openGraph: {
     title: "Shop Handmade Earrings | Aayas Creation",
     description:
-      "The full collection of handcrafted artisan earrings — ethnic & bohemian designs, made with soul.",
-    url: `${SITE_URL}/shop`,
+      "The full collection of handcrafted artisan earrings — ethnic & bohemian designs, made with soul in Ahmedabad, India.",
+    url: abs("/shop"),
     type: "website",
   },
 };
@@ -29,6 +30,16 @@ export default function ShopPage() {
 
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Shop", path: "/shop" },
+          ]),
+          itemListSchema(products, "Aayas Creation Handmade Earrings"),
+        ]}
+      />
+
       <header className={styles.head}>
         <div className="container">
           <p className="eyebrow reveal">The Collection</p>
