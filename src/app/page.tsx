@@ -43,7 +43,28 @@ export default function Home() {
               </Link>
               <Link href="/about" className="link-arrow">Our Story</Link>
             </div>
+
+            <ul className={styles.heroTrust}>
+              <li className={styles.rating}>
+                <span className={styles.stars} aria-hidden="true">★★★★★</span>
+                Loved on Amazon
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-4.35-9.5-8.5C.5 9 2 5.5 5.5 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3C17 5.5 18.5 9 16.5 12.5 14 16.65 12 21 12 21z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                100% Handmade
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l2.4 6.8L21 9.2l-5 4.3 1.6 6.8L12 16.9 6.4 20.3 8 13.5l-5-4.3 6.6-.4L12 2z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/></svg>
+                20+ Artisan Designs
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12c6 0 9-3 9-9 0 6 3 9 9 9-6 0-9 3-9 9 0-6-3-9-9-9z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/></svg>
+                Featherlight Comfort
+              </li>
+            </ul>
           </div>
+
+          <p className={styles.galleryLabel}>Handpicked Bestsellers</p>
 
           <div className={styles.heroGallery}>
             {featured.slice(0, 4).map((p, i) => (
@@ -154,9 +175,13 @@ export default function Home() {
           </div>
           <div className="grid-products">
             {featured.map((p, i) => (
-              <div key={p.id} className="reveal" style={{ transitionDelay: `${(i % 3) * 0.08}s` }}>
-                <ProductCard product={p} priority={i < 3} />
-              </div>
+              <ProductCard
+                key={p.id}
+                product={p}
+                priority={i < 3}
+                className="reveal"
+                style={{ transitionDelay: `${(i % 3) * 0.08}s` }}
+              />
             ))}
           </div>
         </div>

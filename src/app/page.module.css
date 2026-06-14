@@ -35,6 +35,31 @@
   animation: rise 1s var(--ease) both;
 }
 .heroCopy .lede { font-size: var(--step-0); }
+
+/* Hero trust strip */
+.heroTrust {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.7rem 1.8rem;
+  margin-top: 1.9rem;
+  animation: rise 1s var(--ease) 0.34s both;
+}
+.heroTrust li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.heroTrust svg { color: var(--accent-gold); flex-shrink: 0; }
+.rating { color: var(--text-primary); }
+.stars { color: var(--accent-terracotta); letter-spacing: 0.08em; font-size: 0.82rem; }
 .heroCta {
   display: flex;
   align-items: center;
@@ -50,6 +75,28 @@
 }
 
 /* ---- Hero gallery rail ---- */
+.galleryLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-top: clamp(2rem, 4vw, 3.2rem);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  animation: rise 1s var(--ease) 0.4s both;
+}
+.galleryLabel::before,
+.galleryLabel::after {
+  content: "";
+  width: clamp(28px, 8vw, 64px);
+  height: 1px;
+  background: var(--line-gold);
+}
+
 .heroGallery {
   display: flex;
   justify-content: center;
@@ -57,7 +104,7 @@
   gap: clamp(0.8rem, 2vw, 1.5rem);
   width: 100%;
   max-width: 980px;
-  margin-top: clamp(1.75rem, 3.5vw, 3rem);
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
 }
 .galleryItem {
   flex: 1 1 0;

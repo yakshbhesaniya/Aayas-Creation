@@ -263,8 +263,8 @@ main { padding-top: 114px; }
 /* ---------- Shared product grid ---------- */
 .grid-products {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
-  gap: clamp(1.5rem, 3vw, 2.6rem) clamp(1.2rem, 2.2vw, 2rem);
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: clamp(2.25rem, 4vw, 3.5rem) clamp(1.75rem, 3vw, 3rem);
 }
 
 /* ---------- Section heading block ---------- */

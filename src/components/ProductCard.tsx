@@ -6,13 +6,17 @@ export default function ProductCard({
   product,
   imageAlt,
   priority = false,
+  className = "",
+  style,
 }: {
   product: Product;
   imageAlt?: string;
   priority?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
 }) {
   return (
-    <article className={styles.card}>
+    <article className={`${styles.card} ${className}`} style={style}>
       <Link href={`/products/${product.slug}`} className={styles.media} aria-label={product.name}>
         {product.hot && <span className={styles.badge}>Bestseller</span>}
         {/* Amazon CDN images — plain img keeps remote-host config simple */}
