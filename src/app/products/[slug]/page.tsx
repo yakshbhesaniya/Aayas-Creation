@@ -4,6 +4,7 @@ import productsData from '@/data/products.json';
 import styles from './page.module.css';
 import Link from 'next/link';
 import ProductGallery from '@/components/ProductGallery';
+import { SITE_URL } from '@/lib/site';
 
 interface Product {
     id: string;
@@ -31,12 +32,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
     if (!product) return { title: 'Product Not Found' };
 
+    const url = `${SITE_URL}/products/${product.slug}`;
+
     return {
-        title: `${product.name} | Aayas Creation`,
+        // Bare name only — the root layout's title template appends "| Aayas Creation".
+        title: product.name,
         description: product.description,
+        alternates: { canonical: url },
         openGraph: {
             title: product.name,
             description: product.description,
+            url,
+            type: 'website',
             images: [product.image],
         },
     };

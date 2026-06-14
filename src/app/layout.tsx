@@ -5,7 +5,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import LeadCapturePopup from "@/components/LeadCapturePopup";
-import { SITE_URL, SITE_NAME } from "@/lib/site";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { SITE_URL, SITE_NAME, GA_ID } from "@/lib/site";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -61,6 +62,7 @@ export default function RootLayout({
         <FloatingWhatsApp />
         <LeadCapturePopup />
       </body>
+      <GoogleAnalytics gaId={GA_ID} />
     </html>
   );
 }

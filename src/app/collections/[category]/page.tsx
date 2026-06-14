@@ -20,7 +20,9 @@ export async function generateMetadata({
 
   const url = `${SITE_URL}/collections/${cat.slug}`;
   return {
-    title: cat.metaTitle,
+    // metaTitle already includes the brand ("… — Aayas Creation"), so use absolute
+    // to bypass the root layout's "%s | Aayas Creation" template (avoids double brand).
+    title: { absolute: cat.metaTitle },
     description: cat.metaDescription,
     keywords: cat.keywords,
     alternates: { canonical: url },
