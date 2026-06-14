@@ -44,6 +44,22 @@ export default function Home() {
               <Link href="/about" className="link-arrow">Our Story</Link>
             </div>
           </div>
+
+          <div className={styles.heroGallery}>
+            {featured.slice(0, 4).map((p, i) => (
+              <Link
+                key={p.id}
+                href={`/products/${p.slug}`}
+                className={`${styles.galleryItem} ${styles[`g${i + 1}`]}`}
+              >
+                <div className={styles.galleryFrame}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={p.image} alt={p.name} className={styles.galleryImg} />
+                </div>
+                <span className={styles.galleryCap}>{p.name}</span>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
