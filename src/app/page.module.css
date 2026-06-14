@@ -2,14 +2,14 @@
 .hero {
   position: relative;
   z-index: 2;
-  padding: clamp(2rem, 5vw, 4.5rem) 0 clamp(3rem, 6vw, 6rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem) 0 clamp(2.5rem, 4vw, 4rem);
   overflow: hidden;
 }
 .heroVectors { position: absolute; inset: 0; pointer-events: none; z-index: -1; }
-.vec { position: absolute; opacity: 0.28; filter: saturate(1.05); animation: float 9s ease-in-out infinite; }
-.v1 { top: 6%; left: 4%; }
-.v2 { bottom: 6%; right: 3%; opacity: 0.2; animation-delay: -3s; }
-.v3 { top: 30%; left: 1%; opacity: 0.16; animation-delay: -5s; }
+.vec { position: absolute; opacity: 0.4; filter: saturate(1.05); animation: float 9s ease-in-out infinite; }
+.v1 { top: 8%; left: 5%; }
+.v2 { top: 10%; right: 5%; opacity: 0.34; animation-delay: -3s; }
+.v3 { top: 44%; left: 2%; opacity: 0.26; animation-delay: -5s; }
 @keyframes float {
   0%, 100% { transform: translateY(0) rotate(-4deg); }
   50% { transform: translateY(-26px) rotate(4deg); }
@@ -21,26 +21,26 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-top: clamp(1rem, 3vw, 2.5rem);
 }
 .heroCopy { display: flex; flex-direction: column; align-items: center; }
 .heroCopy .eyebrow { animation: rise 1s var(--ease) both; }
 .heroCopy .lede { margin-inline: auto; animation: rise 1s var(--ease) 0.12s both; }
 
 .heroTitle {
-  font-size: var(--step-5);
+  font-size: clamp(2.8rem, 1.8rem + 4.6vw, 5.2rem);
   font-weight: 420;
   line-height: 0.98;
-  max-width: 13ch;
-  margin: 1.5rem auto 0;
+  max-width: 14ch;
+  margin: 1.1rem auto 0;
   animation: rise 1s var(--ease) both;
 }
+.heroCopy .lede { font-size: var(--step-0); }
 .heroCta {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1.8rem;
-  margin-top: 2.4rem;
+  margin-top: 1.8rem;
   flex-wrap: wrap;
   animation: rise 1s var(--ease) 0.24s both;
 }
@@ -56,8 +56,8 @@
   align-items: flex-start;
   gap: clamp(0.8rem, 2vw, 1.5rem);
   width: 100%;
-  max-width: 940px;
-  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  max-width: 980px;
+  margin-top: clamp(1.75rem, 3.5vw, 3rem);
 }
 .galleryItem {
   flex: 1 1 0;
