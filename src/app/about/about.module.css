@@ -1,0 +1,96 @@
+.hero {
+  position: relative;
+  z-index: 2;
+  padding: clamp(3rem, 7vw, 6rem) 0 clamp(2rem, 4vw, 3rem);
+  text-align: center;
+}
+.heroTitle {
+  font-size: var(--step-5);
+  margin: 1.2rem auto 0;
+  max-width: 14ch;
+}
+.heroLede { max-width: 56ch; margin: 1.5rem auto 0; }
+
+/* Intro split */
+.intro {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  align-items: center;
+  gap: clamp(2rem, 6vw, 5.5rem);
+}
+.introImg { position: relative; }
+.img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+  aspect-ratio: 4 / 5;
+}
+.introCopy h2 { font-size: var(--step-3); max-width: 16ch; }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+.stat { display: flex; flex-direction: column; gap: 0.2rem; }
+.stat strong {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 460;
+  color: var(--accent-terracotta);
+}
+.stat span {
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* Process (dark) */
+.process { background: var(--bg-ink); }
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+.step { padding-top: 1.6rem; border-top: 1px solid rgba(243, 236, 221, 0.18); }
+.stepNum {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 2.4rem;
+  color: var(--accent-gold);
+  display: block;
+  margin-bottom: 1rem;
+}
+.step h3 { color: var(--on-ink); font-size: 1.3rem; margin-bottom: 0.5rem; }
+.step p { color: var(--on-ink-soft); font-size: 0.92rem; line-height: 1.65; }
+
+/* Quote */
+.quote { text-align: center; max-width: 900px; }
+.quote p {
+  font-family: var(--font-heading);
+  font-size: var(--step-3);
+  font-weight: 420;
+  line-height: 1.25;
+}
+.cta {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .intro { grid-template-columns: 1fr; }
+  .introImg { max-width: 460px; }
+  .steps { grid-template-columns: 1fr 1fr; gap: 2rem 1.5rem; }
+}
+@media (max-width: 520px) {
+  .stats { grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .steps { grid-template-columns: 1fr; }
+}

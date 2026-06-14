@@ -1,0 +1,103 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+}
+
+.media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+  aspect-ratio: 4 / 5;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease), filter 0.6s var(--ease);
+}
+.media:hover .image { transform: scale(1.06); }
+
+.badge {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.9rem;
+  z-index: 2;
+  padding: 0.4rem 0.85rem;
+  font-family: var(--font-body);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: var(--accent-peach);
+  border-radius: var(--radius-pill);
+}
+
+.view {
+  position: absolute;
+  left: 50%;
+  bottom: 1rem;
+  transform: translate(-50%, 1.5rem);
+  padding: 0.7rem 1.4rem;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bg-primary);
+  background: rgba(33, 31, 27, 0.82);
+  backdrop-filter: blur(6px);
+  border-radius: var(--radius-pill);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease), transform 0.5s var(--ease);
+  white-space: nowrap;
+}
+.media:hover .view { opacity: 1; transform: translate(-50%, 0); }
+
+.body {
+  padding: 1.1rem 0.2rem 0;
+}
+
+.name {
+  font-size: var(--step-1);
+  font-weight: 460;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.name a:hover { color: var(--accent-terracotta); }
+
+.desc {
+  margin-top: 0.4rem;
+  font-size: var(--step--1);
+  color: var(--text-secondary);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.actions {
+  margin-top: 0.9rem;
+}
+
+.buy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--line-gold);
+  transition: color 0.3s var(--ease), gap 0.3s var(--ease);
+}
+.buy svg { transition: transform 0.3s var(--ease); }
+.buy:hover { color: var(--accent-terracotta); gap: 0.75rem; }
+.buy:hover svg { transform: translate(2px, -2px); }

@@ -1,0 +1,25 @@
+.head {
+  position: relative;
+  z-index: 2;
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(1.5rem, 3vw, 2.5rem);
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--line);
+}
+.crumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.6rem;
+}
+.crumbs a:hover { color: var(--accent-terracotta); }
+.crumbCurrent { color: var(--text-primary); }
+.title { font-size: var(--step-4); margin-top: 1rem; }
+.intro { max-width: 60ch; margin-top: 1.2rem; }
+
+.foot {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}

@@ -1,0 +1,85 @@
+.hero {
+  position: relative;
+  z-index: 2;
+  padding: clamp(3rem, 7vw, 6rem) 0 clamp(1.5rem, 3vw, 2.5rem);
+}
+.title { font-size: var(--step-5); margin-top: 1.2rem; max-width: 16ch; }
+.sub { max-width: 56ch; margin-top: 1.5rem; }
+
+.methods {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.2rem, 2.5vw, 2rem);
+}
+.method {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 2.2rem 2rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+.method::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background: var(--accent-terracotta);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--ease);
+}
+.method:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: transparent;
+}
+.method:hover::after { transform: scaleX(1); }
+
+.methodLabel {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-terracotta);
+}
+.methodValue {
+  font-family: var(--font-heading);
+  font-size: 1.55rem;
+  font-weight: 460;
+  line-height: 1.15;
+}
+.methodSub { font-size: 0.85rem; color: var(--text-secondary); }
+.methodArrow {
+  margin-top: 0.6rem;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  transition: transform 0.35s var(--ease);
+}
+.method:hover .methodArrow { transform: translateX(6px); color: var(--accent-terracotta); }
+
+/* Band */
+.band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  padding: clamp(2.5rem, 5vw, 4rem);
+  background: var(--bg-ink);
+  color: var(--on-ink);
+  border-radius: var(--radius-lg);
+}
+.bandText .eyebrow { color: var(--accent-gold); }
+.bandTitle { color: var(--on-ink); font-size: var(--step-3); margin-top: 1rem; }
+.band :global(.text-secondary) { color: var(--on-ink-soft); }
+.bandCta { display: flex; gap: 1rem; flex-wrap: wrap; }
+.band :global(.btn-outline) { color: var(--on-ink); border-color: rgba(243,236,221,0.3); }
+.band :global(.btn-outline:hover) { background: var(--on-ink); color: var(--bg-ink); border-color: var(--on-ink); }
+
+@media (max-width: 880px) {
+  .methods { grid-template-columns: 1fr; }
+}

@@ -18,8 +18,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
+  const staticUrls = [
+    { url: `${SITE_URL}/shop`, changeFrequency: "weekly" as const, priority: 0.9 },
+    { url: `${SITE_URL}/about`, changeFrequency: "monthly" as const, priority: 0.6 },
+    { url: `${SITE_URL}/wholesale`, changeFrequency: "monthly" as const, priority: 0.7 },
+    { url: `${SITE_URL}/contact`, changeFrequency: "monthly" as const, priority: 0.5 },
+    { url: `${SITE_URL}/privacy`, changeFrequency: "yearly" as const, priority: 0.2 },
+  ];
+
   return [
     { url: SITE_URL, changeFrequency: "weekly", priority: 1 },
+    ...staticUrls,
     ...categoryUrls,
     ...productUrls,
   ];

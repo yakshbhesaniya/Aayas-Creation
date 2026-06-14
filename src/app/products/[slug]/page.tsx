@@ -1,34 +1,19 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import productsData from '@/data/products.json';
-import styles from './page.module.css';
 import Link from 'next/link';
 import ProductGallery from '@/components/ProductGallery';
+import ProductCard from '@/components/ProductCard';
+import { getAllProducts, getProduct, getRelatedProducts } from '@/lib/products';
 import { SITE_URL } from '@/lib/site';
+import styles from './page.module.css';
 
-interface Product {
-    id: string;
-    name: string;
-    description: string;
-    amazonUrl: string;
-    slug: string;
-    image: string;
-    gallery?: string[];
-}
-
-const typedProductsData: Product[] = productsData as Product[];
-
-// Generate static params for all products so they get statically rendered at build time
 export async function generateStaticParams() {
-    return typedProductsData.map((product) => ({
-        slug: product.slug,
-    }));
+    return getAllProducts().map((product) => ({ slug: product.slug }));
 }
 
-// Dynamically generate metadata for SEO
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-    const resolvedParams = await params;
-    const product = typedProductsData.find((p) => p.slug === resolvedParams.slug);
+    const { slug } = await params;
+    const product = getProduct(slug);
 
     if (!product) return { title: 'Product Not Found' };
 
@@ -49,25 +34,28 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
 }
 
+const FEATURES = [
+    'Handmade with Soul',
+    'Ethnic & Bohemian',
+    'Featherlight Comfort',
+    'Authentic Indian Craftsmanship',
+];
+
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
-    const resolvedParams = await params;
-    const product = typedProductsData.find((p) => p.slug === resolvedParams.slug);
+    const { slug } = await params;
+    const product = getProduct(slug);
 
-    if (!product) {
-        notFound();
-    }
+    if (!product) notFound();
 
-    // Schema Markup for Handmade Product
+    const related = getRelatedProducts(slug, 3);
+
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'Product',
         name: product.name,
-        image: product.image,
+        image: product.gallery || [product.image],
         description: product.description,
-        brand: {
-            '@type': 'Brand',
-            name: 'Aayas Creation',
-        },
+        brand: { '@type': 'Brand', name: 'Aayas Creation' },
         offers: {
             '@type': 'Offer',
             availability: 'https://schema.org/InStock',
@@ -81,37 +69,75 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            <div className={styles.productContainer}>
+
+            <div className={styles.wrap}>
                 <div className="container">
-                    <Link href="/#collection" className={styles.backLink}>← Back to Collection</Link>
-                    <div className={styles.productGrid}>
-                        <div className={styles.imageColumn}>
-                            {/* Pass gallery array if it exists, otherwise pass just the main image */}
+                    <nav className={styles.crumbs} aria-label="Breadcrumb">
+                        <Link href="/">Home</Link>
+                        <span aria-hidden="true">/</span>
+                        <Link href="/shop">Shop</Link>
+                        <span aria-hidden="true">/</span>
+                        <span className={styles.crumbCurrent}>{product.name}</span>
+                    </nav>
+
+                    <div className={styles.grid}>
+                        <div className={styles.gallery}>
                             <ProductGallery images={product.gallery || [product.image]} productName={product.name} />
                         </div>
-                        <div className={styles.infoColumn}>
-                            <h1 className={styles.productTitle}>{product.name}</h1>
-                            {(product as Product & { hot?: boolean }).hot && (
-                                <span className={styles.hotBadge}>🔥 Hot Selling</span>
-                            )}
-                            <p className={styles.productDescription}>{product.description}</p>
 
-                            <div className={styles.featuresList}>
-                                <div className={styles.feature}>✨ Handmade with Soul</div>
-                                <div className={styles.feature}>🌿 Ethnic & Bohemian</div>
-                                <div className={styles.feature}>🇮🇳 Authentic Indian Craftsmanship</div>
-                            </div>
+                        <div className={styles.info}>
+                            {product.hot && <span className={styles.badge}>Bestseller</span>}
+                            <h1 className={styles.title}>{product.name}</h1>
+                            <p className={styles.desc}>{product.description}</p>
+
+                            <ul className={styles.features}>
+                                {FEATURES.map((f) => (
+                                    <li key={f}>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                                        {f}
+                                    </li>
+                                ))}
+                            </ul>
 
                             <div className={styles.actions}>
-                                <p className={styles.amazonNotice}>This product is exclusively available for retail purchase on our Amazon store.</p>
                                 <a href={product.amazonUrl} target="_blank" rel="noopener noreferrer" className="btn-primary">
                                     Buy on Amazon
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
                                 </a>
+                                <p className={styles.notice}>
+                                    Secure retail checkout is handled on our official Amazon store.
+                                </p>
+                            </div>
+
+                            <div className={styles.meta}>
+                                <Link href="/wholesale">Buying in bulk? See wholesale →</Link>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            {related.length > 0 && (
+                <section className="section" style={{ background: 'var(--bg-secondary)' }}>
+                    <div className="container">
+                        <div className="section-head">
+                            <div>
+                                <p className="eyebrow">You May Also Like</p>
+                                <h2>More handcrafted pieces.</h2>
+                            </div>
+                            <Link href="/shop" className="link-arrow">
+                                View all
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                            </Link>
+                        </div>
+                        <div className="grid-products">
+                            {related.map((p) => (
+                                <ProductCard key={p.id} product={p} />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
         </>
     );
 }

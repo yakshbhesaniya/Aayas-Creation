@@ -1,78 +1,113 @@
 .footer {
-    background-color: var(--bg-secondary);
-    padding: var(--spacing-lg) 0 0;
-    border-top: 1px solid rgba(112, 107, 97, 0.1);
-    color: var(--text-primary);
+  position: relative;
+  z-index: 2;
+  background: var(--bg-ink);
+  color: var(--on-ink-soft);
+  padding: clamp(4rem, 8vw, 7rem) 0 2rem;
 }
 
-.footerGrid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: var(--spacing-lg);
-    padding-bottom: var(--spacing-lg);
+/* ---- Big CTA band ---- */
+.cta {
+  text-align: center;
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+  border-bottom: 1px solid rgba(243, 236, 221, 0.12);
+}
+.ctaEyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+}
+.ctaTitle {
+  margin-top: 1rem;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 420;
+  color: var(--on-ink);
+}
+.cta :global(.btn-outline) {
+  color: var(--on-ink);
+  border-color: rgba(243, 236, 221, 0.3);
+}
+.cta :global(.btn-outline:hover) {
+  background: var(--on-ink);
+  color: var(--bg-ink);
+  border-color: var(--on-ink);
 }
 
-.footerBrand {
-    font-family: var(--font-heading);
-    font-size: 1.8rem;
-    margin-bottom: var(--spacing-sm);
+/* ---- Link grid ---- */
+.grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+  gap: 2.5rem;
+  padding: clamp(3rem, 6vw, 5rem) 0;
 }
 
-.brandInfo p {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    margin-bottom: var(--spacing-md);
+.brand {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--on-ink);
 }
-
-.socialLinks {
-    display: flex;
-    gap: 1rem;
+.tagline {
+  margin-top: 1rem;
+  max-width: 34ch;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--on-ink-soft);
 }
-
-.socialLinks a {
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+.socials {
+  display: flex;
+  gap: 1.4rem;
+  margin-top: 1.6rem;
 }
-
-.linksBlock h4 {
-    font-size: 1.1rem;
-    margin-bottom: var(--spacing-sm);
+.socials a {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-ink);
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--line-gold);
+  transition: color 0.3s var(--ease);
 }
+.socials a:hover { color: var(--accent-gold); }
 
-.linksBlock ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+.col h4 {
+  font-family: var(--font-body);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: 1.2rem;
 }
-
-.linksBlock a {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    transition: color 0.3s;
+.col ul { list-style: none; }
+.col li { margin-bottom: 0.7rem; }
+.col a, .muted {
+  font-size: 0.92rem;
+  color: var(--on-ink-soft);
+  transition: color 0.3s var(--ease);
 }
+.col a:hover { color: var(--on-ink); }
+.muted { display: block; }
 
-.linksBlock a:hover {
-    color: var(--accent-terracotta);
+/* ---- Bottom bar ---- */
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(243, 236, 221, 0.12);
+  font-size: 0.8rem;
 }
+.bottomLinks { display: flex; gap: 1.5rem; }
+.bottomLinks a:hover { color: var(--on-ink); }
 
-.footerBottom {
-    text-align: center;
-    padding: var(--spacing-md) 0;
-    border-top: 1px solid rgba(112, 107, 97, 0.1);
-    color: var(--text-secondary);
-    font-size: 0.85rem;
+@media (max-width: 860px) {
+  .grid { grid-template-columns: 1fr 1fr; gap: 2.5rem 1.5rem; }
+  .brandCol { grid-column: 1 / -1; }
 }
-
-@media (max-width: 768px) {
-    .footerGrid {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-md);
-        text-align: center;
-    }
-
-    .socialLinks {
-        justify-content: center;
-    }
+@media (max-width: 520px) {
+  .grid { grid-template-columns: 1fr; }
+  .bottom { flex-direction: column; text-align: center; }
 }

@@ -1,52 +1,143 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import styles from './Navbar.module.css';
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { getCategories } from "@/lib/categories";
+import styles from "./Navbar.module.css";
+
+const NAV = [
+  { href: "/", label: "Home" },
+  { href: "/shop", label: "Shop" },
+  { href: "/about", label: "Our Story" },
+  { href: "/wholesale", label: "Wholesale" },
+  { href: "/contact", label: "Contact" },
+];
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const categories = getCategories();
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Lock body scroll when the mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.topBar}>
-        <div className={styles.topBarContent}>
-          <a href="tel:+919104861625" className={styles.contactLink}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="14" height="14" fill="currentColor" style={{ marginRight: '6px', verticalAlign: 'middle' }}>
-              <path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z" />
-            </svg>
-            +91 9104861625
-          </a>
-          <span className={styles.topBarDivider}>|</span>
-          <a href="mailto:aayascreation@gmail.com" className={styles.contactLink}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="14" height="14" fill="currentColor" style={{ marginRight: '6px', verticalAlign: 'middle' }}>
-              <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
-            </svg>
-            aayascreation@gmail.com
-          </a>
+        <div className={`container ${styles.topInner}`}>
+          <span className={styles.topNote}>Handcrafted in Ahmedabad, India</span>
+          <div className={styles.topContacts}>
+            <a href="tel:+919104861625">+91 9104861625</a>
+            <span className={styles.dot} aria-hidden="true">·</span>
+            <a href="mailto:aayascreation@gmail.com">aayascreation@gmail.com</a>
+          </div>
         </div>
       </div>
-      <nav className={styles.nav}>
-        <div className={styles.logo}>
-          <Link href="/">Aayas Creation</Link>
-        </div>
 
-        <button className={styles.hamburger} onClick={toggleMenu} aria-label="Toggle menu">
-          <span className={`${styles.bar} ${isOpen ? styles.barOpen : ''}`}></span>
-          <span className={`${styles.bar} ${isOpen ? styles.barOpen : ''}`}></span>
-          <span className={`${styles.bar} ${isOpen ? styles.barOpen : ''}`}></span>
-        </button>
+      <nav className={`container ${styles.nav}`}>
+        <Link href="/" className={styles.brand} onClick={() => setOpen(false)}>
+          <span className={styles.brandMark}>Aayas</span>
+          <span className={styles.brandSub}>Creation</span>
+        </Link>
 
-        <ul className={`${styles.navLinks} ${isOpen ? styles.navLinksOpen : ''}`}>
-          <li><Link href="/" onClick={() => setIsOpen(false)}>Home</Link></li>
-          <li><Link href="/#collection" onClick={() => setIsOpen(false)}>Collection</Link></li>
-          <li><Link href="/#about" onClick={() => setIsOpen(false)}>Our Story</Link></li>
-          <li><Link href="/#bulk-orders" onClick={() => setIsOpen(false)}>Bulk Orders</Link></li>
-          <li><Link href="/#contact" onClick={() => setIsOpen(false)}>Contact</Link></li>
+        <ul className={styles.links}>
+          {NAV.map((item) => {
+            const active =
+              item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+            const isShop = item.href === "/shop";
+            return (
+              <li key={item.href} className={isShop ? styles.hasMenu : undefined}>
+                <Link
+                  href={item.href}
+                  className={`${styles.link} ${active ? styles.active : ""}`}
+                >
+                  {item.label}
+                  {isShop && (
+                    <svg className={styles.caret} width="10" height="10" viewBox="0 0 12 12" aria-hidden="true">
+                      <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+                    </svg>
+                  )}
+                </Link>
+                {isShop && categories.length > 0 && (
+                  <div className={styles.dropdown}>
+                    <div className={styles.dropInner}>
+                      <Link href="/shop" className={styles.dropFeatured}>
+                        All Earrings
+                        <span>Browse the full collection</span>
+                      </Link>
+                      <ul className={styles.dropList}>
+                        {categories.map((c) => (
+                          <li key={c.slug}>
+                            <Link href={`/collections/${c.slug}`}>{c.title}</Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </li>
+            );
+          })}
         </ul>
+
+        <a
+          href="https://www.amazon.in/s?k=Aayas+Creation"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.cta}
+        >
+          Shop on Amazon
+        </a>
+
+        <button
+          className={styles.burger}
+          onClick={() => setOpen((v) => !v)}
+          aria-label="Toggle menu"
+          aria-expanded={open}
+        >
+          <span className={open ? styles.barOpen : ""} />
+          <span className={open ? styles.barOpen : ""} />
+          <span className={open ? styles.barOpen : ""} />
+        </button>
       </nav>
+
+      {/* Mobile overlay */}
+      <div className={`${styles.overlay} ${open ? styles.overlayOpen : ""}`}>
+        <ul className={styles.mobileLinks}>
+          {NAV.map((item, i) => (
+            <li key={item.href} style={{ transitionDelay: `${0.06 * i + 0.1}s` }}>
+              <Link href={item.href} onClick={() => setOpen(false)}>
+                <span className={styles.mobileIndex}>0{i + 1}</span>
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className={styles.mobileFoot}>
+          <a href="https://www.amazon.in/s?k=Aayas+Creation" target="_blank" rel="noopener noreferrer" className="btn-primary">
+            Shop on Amazon
+          </a>
+          <p>
+            <a href="tel:+919104861625">+91 9104861625</a>
+            <br />
+            <a href="mailto:aayascreation@gmail.com">aayascreation@gmail.com</a>
+          </p>
+        </div>
+      </div>
     </header>
   );
 }

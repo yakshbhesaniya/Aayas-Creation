@@ -1,9 +1,10 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import styles from "../../page.module.css";
 import { getCategories, getCategory } from "@/lib/categories";
 import { SITE_URL } from "@/lib/site";
+import ProductCard from "@/components/ProductCard";
+import styles from "./collection.module.css";
 
 export async function generateStaticParams() {
   return getCategories().map((c) => ({ category: c.slug }));
@@ -45,7 +46,6 @@ export default async function CollectionPage({
   const cat = getCategory(category);
   if (!cat) notFound();
 
-  // ItemList schema helps Google show this as a rich product collection.
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -80,58 +80,40 @@ export default async function CollectionPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <section className={styles.section}>
+
+      <header className={styles.head}>
         <div className="container">
-          <Link href="/#collection" className={styles.detailsLink}>
-            ← Back to Collection
-          </Link>
-          <div className="text-center">
-            <h1 style={{ marginTop: "1rem" }}>{cat.title}</h1>
-            <p
-              className="mt-sm text-secondary"
-              style={{ maxWidth: "680px", margin: "0.5rem auto 0" }}
-            >
-              {cat.intro}
-            </p>
+          <nav className={styles.crumbs} aria-label="Breadcrumb">
+            <Link href="/">Home</Link>
+            <span aria-hidden="true">/</span>
+            <Link href="/shop">Shop</Link>
+            <span aria-hidden="true">/</span>
+            <span className={styles.crumbCurrent}>{cat.title}</span>
+          </nav>
+          <p className="eyebrow reveal">Collection</p>
+          <h1 className={`${styles.title} reveal`}>{cat.title}</h1>
+          <p className={`lede reveal ${styles.intro}`}>{cat.intro}</p>
+        </div>
+      </header>
+
+      <section className="section section--tight">
+        <div className="container">
+          <div className="grid-products">
+            {cat.products.map((product, i) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                imageAlt={`${product.name} — ${cat.title}`}
+                priority={i < 4}
+              />
+            ))}
           </div>
 
-          <div className={styles.productGrid} style={{ marginTop: "2.5rem" }}>
-            {cat.products.map((product) => (
-              <div
-                key={product.id}
-                className={`${styles.productCard}${product.hot ? ` ${styles.hotCard}` : ""}`}
-              >
-                <div className={styles.productImageWrapper}>
-                  {product.hot && (
-                    <span className={styles.hotBadge}>🔥 Hot Selling</span>
-                  )}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={product.image}
-                    alt={`${product.name} — ${cat.title}`}
-                    className={styles.productImage}
-                  />
-                </div>
-                <div className={styles.productInfo}>
-                  <h3>{product.name}</h3>
-                  <p>{product.description}</p>
-                  <a
-                    href={product.amazonUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`btn-primary ${styles.buyBtn}`}
-                  >
-                    Buy on Amazon
-                  </a>
-                  <Link
-                    href={`/products/${product.slug}`}
-                    className={styles.detailsLink}
-                  >
-                    View Details
-                  </Link>
-                </div>
-              </div>
-            ))}
+          <div className={styles.foot}>
+            <Link href="/shop" className="link-arrow">
+              Browse all earrings
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </Link>
           </div>
         </div>
       </section>

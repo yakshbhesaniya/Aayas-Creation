@@ -1,153 +1,189 @@
-import styles from './page.module.css';
-import productsData from '@/data/products.json';
-import Link from 'next/link';
-import BulkOrderForm from '@/components/BulkOrderForm';
-import Image from 'next/image';
+import Link from "next/link";
+import Image from "next/image";
+import styles from "./page.module.css";
+import ProductCard from "@/components/ProductCard";
+import { getFeaturedProducts } from "@/lib/products";
+import { getCategories } from "@/lib/categories";
+
+const VALUES = [
+  { n: "01", t: "No Mass Production", d: "Every pair is conceived and finished by hand in small batches — never stamped out by a machine." },
+  { n: "02", t: "Featherlight Comfort", d: "Designed for all-day wear and long festive days, without the weight or the ache." },
+  { n: "03", t: "Made in India", d: "Crafted in Ahmedabad by skilled artisans, supporting local talent and living heritage." },
+  { n: "04", t: "Made for Gifting", d: "Each piece arrives as a small work of art — a thoughtful, personal gift to be treasured." },
+];
 
 export default function Home() {
+  const featured = getFeaturedProducts(6);
+  const categories = getCategories().slice(0, 4);
+
   return (
-    <div className={styles.page}>
-
-      {/* Hero Section */}
+    <>
+      {/* ---------- HERO ---------- */}
       <section className={styles.hero}>
-        {/* Floating earring vectors — random positions */}
-        <div className={styles.heroBg} aria-hidden="true">
-          <Image src="/earringvector1.png" alt="" width={260} height={260} className={`${styles.floatEl} ${styles.f1}`} unoptimized />
-          <Image src="/earringvector2.png" alt="" width={210} height={210} className={`${styles.floatEl} ${styles.f2}`} unoptimized />
-          <Image src="/earringvector3.png" alt="" width={300} height={300} className={`${styles.floatEl} ${styles.f3}`} unoptimized />
-          <Image src="/earringvector1.png" alt="" width={180} height={180} className={`${styles.floatEl} ${styles.f4}`} unoptimized />
-          <Image src="/earringvector3.png" alt="" width={240} height={240} className={`${styles.floatEl} ${styles.f5}`} unoptimized />
-          <Image src="/earringvector2.png" alt="" width={280} height={280} className={`${styles.floatEl} ${styles.f6}`} unoptimized />
-          <Image src="/earringvector1.png" alt="" width={200} height={200} className={`${styles.floatEl} ${styles.f7}`} unoptimized />
-          <Image src="/earringvector3.png" alt="" width={250} height={250} className={`${styles.floatEl} ${styles.f8}`} unoptimized />
-          <Image src="/earringvector2.png" alt="" width={190} height={190} className={`${styles.floatEl} ${styles.f9}`} unoptimized />
+        <div className={styles.heroVectors} aria-hidden="true">
+          <Image src="/earringvector1.png" alt="" width={220} height={220} className={`${styles.vec} ${styles.v1}`} unoptimized />
+          <Image src="/earringvector3.png" alt="" width={260} height={260} className={`${styles.vec} ${styles.v2}`} unoptimized />
+          <Image src="/earringvector2.png" alt="" width={180} height={180} className={`${styles.vec} ${styles.v3}`} unoptimized />
         </div>
 
-        <div className={styles.heroContent}>
-          <h1 className="fade-in">Handmade Earrings. <br /> Crafted with Soul.</h1>
-          <p className="fade-in mt-sm">Embrace the beauty of artisan-crafted, ethnic and bohemian aesthetics.</p>
-          <div className={`${styles.ctaGroup} fade-in mt-md`}>
-            <Link href="#collection" className="btn-primary">View Collection</Link>
-            <Link href="#bulk-orders" className="btn-outline">Bulk Orders</Link>
+        <div className={`container ${styles.heroInner}`}>
+          <div className={styles.heroCopy}>
+            <p className="eyebrow">Handmade Artisan Earrings</p>
+            <h1 className={styles.heroTitle}>
+              Adornments<br />crafted with <span className="italic-accent">soul</span>.
+            </h1>
+            <p className="lede" style={{ maxWidth: "44ch", marginTop: "1.5rem" }}>
+              Ethnic &amp; bohemian earrings, individually shaped and detailed by hand in
+              Ahmedabad. No two pairs alike — each one a quiet little story.
+            </p>
+            <div className={styles.heroCta}>
+              <Link href="/shop" className="btn-primary">
+                Explore the Collection
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              </Link>
+              <Link href="/about" className="link-arrow">Our Story</Link>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className={`${styles.section} ${styles.about}`}>
-        <div className={`container ${styles.aboutGrid}`}>
-          <div className={styles.aboutImageContainer}>
-            <Image
-              src="/logo.jpg"
-              alt="Aayas Creation Logo"
-              width={1400}
-              height={1400}
-              className={styles.aboutImage}
-              unoptimized
-            />
+      {/* ---------- MARQUEE ---------- */}
+      <div className={styles.marquee} aria-hidden="true">
+        <div className={styles.marqueeTrack}>
+          {Array.from({ length: 2 }).map((_, r) => (
+            <div className={styles.marqueeGroup} key={r}>
+              {["Handmade with Soul", "Featherlight", "Ethnic & Bohemian", "Made in India", "Small Batch", "One of a Kind"].map((w) => (
+                <span key={w}>{w}<i>✦</i></span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ---------- STORY ---------- */}
+      <section className="section">
+        <div className={`container ${styles.story}`}>
+          <div className={`${styles.storyImg} reveal`}>
+            <Image src="/logo.jpg" alt="Aayas Creation artisan craftsmanship" width={900} height={900} className={styles.storyImage} unoptimized />
+            <span className={styles.storyStamp}>Est. Ahmedabad</span>
           </div>
-          <div className={styles.aboutText}>
-            <h2>The Story of <br /> Aayas Creation</h2>
-            <p className="mt-md">Every piece we create tells a story of authentic Indian craftsmanship. Our earrings are not factory-produced; they are individually conceptualized, gently crafted, and carefully detailed by skilled artisans.</p>
-            <p className="mt-sm">When you wear Aayas Creation, you are not just wearing jewelry. You are wearing a piece of art that celebrates uniqueness and soulful design.</p>
+          <div className={`${styles.storyCopy} reveal`}>
+            <p className="eyebrow">The Story</p>
+            <h2 className={styles.storyTitle}>Every piece tells a story of authentic Indian craftsmanship.</h2>
+            <p className="mt-md text-secondary">
+              Our earrings are never factory-produced. They are individually conceptualized,
+              gently crafted, and carefully detailed by skilled artisans who pour patience
+              and personality into every pair.
+            </p>
+            <p className="mt-sm text-secondary">
+              When you wear Aayas Creation, you aren&apos;t just wearing jewelry — you&apos;re
+              wearing a piece of art that celebrates uniqueness and soulful design.
+            </p>
+            <Link href="/about" className="link-arrow" style={{ marginTop: "2rem" }}>
+              Read our full story
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Product Gallery Section */}
-      <section id="collection" className={styles.section}>
-        <div className="container text-center">
-          <h2>Our Collection</h2>
-          <p className="mt-sm mb-lg text-secondary">Discover our handpicked aesthetic pieces.</p>
+      {/* ---------- COLLECTIONS ---------- */}
+      <section className="section" style={{ background: "var(--bg-secondary)" }}>
+        <div className="container">
+          <div className="section-head reveal">
+            <div>
+              <p className="eyebrow">Shop by Style</p>
+              <h2>Find the pair that feels like you.</h2>
+            </div>
+            <Link href="/shop" className="link-arrow">
+              View all
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </Link>
+          </div>
 
-          <div className={styles.productGrid}>
-            {productsData.map((product) => (
-              <div key={product.id} className={`${styles.productCard}${(product as { hot?: boolean }).hot ? ` ${styles.hotCard}` : ''}`}>
-                <div className={styles.productImageWrapper}>
-                  {(product as { hot?: boolean }).hot && (
-                    <span className={styles.hotBadge}>🔥 Hot Selling</span>
-                  )}
+          <div className={styles.collectionGrid}>
+            {categories.map((c, i) => (
+              <Link
+                href={`/collections/${c.slug}`}
+                key={c.slug}
+                className={`${styles.collCard} reveal`}
+                style={{ transitionDelay: `${i * 0.08}s` }}
+              >
+                <div className={styles.collImgWrap}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={product.image} alt={product.name} className={styles.productImage} />
+                  <img src={c.products[0]?.image} alt={c.title} className={styles.collImg} />
                 </div>
-                <div className={styles.productInfo}>
-                  <h3>{product.name}</h3>
-                  <p>{product.description}</p>
-                  <a href={product.amazonUrl} target="_blank" rel="noopener noreferrer" className={`btn-primary ${styles.buyBtn}`}>
-                    Buy on Amazon
-                  </a>
-                  <Link href={`/products/${product.slug}`} className={styles.detailsLink}>View Details</Link>
+                <div className={styles.collMeta}>
+                  <h3>{c.title}</h3>
+                  <span>{c.products.length} styles →</span>
                 </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- FEATURED PRODUCTS ---------- */}
+      <section className="section">
+        <div className="container">
+          <div className="section-head reveal">
+            <div>
+              <p className="eyebrow">Loved by Customers</p>
+              <h2>Our bestselling pieces.</h2>
+            </div>
+            <Link href="/shop" className="link-arrow">
+              Shop all earrings
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </Link>
+          </div>
+          <div className="grid-products">
+            {featured.map((p, i) => (
+              <div key={p.id} className="reveal" style={{ transitionDelay: `${(i % 3) * 0.08}s` }}>
+                <ProductCard product={p} priority={i < 3} />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Why Choose Handmade Section */}
-      <section className={`${styles.section} ${styles.whyHandmade}`}>
-        <div className="container text-center">
-          <h2>Why Choose Handmade?</h2>
-          <div className={`${styles.featuresGrid} mt-lg`}>
-            <div className={styles.featureItem}>
-              <h3>No Mass Production</h3>
-              <p>Each pair is unique and crafted in small batches.</p>
+      {/* ---------- WHY HANDMADE ---------- */}
+      <section className={`section ${styles.values}`}>
+        <div className="container">
+          <div className="section-head reveal">
+            <div>
+              <p className="eyebrow" style={{ color: "var(--accent-gold)" }}>Why Handmade</p>
+              <h2 style={{ color: "var(--on-ink)" }}>The difference you can feel.</h2>
             </div>
-            <div className={styles.featureItem}>
-              <h3>Lightweight Comfort</h3>
-              <p>Designed for prolonged wear without irritation.</p>
-            </div>
-            <div className={styles.featureItem}>
-              <h3>Made in India</h3>
-              <p>Supporting local talent and preserving heritage.</p>
-            </div>
-            <div className={styles.featureItem}>
-              <h3>Ideal for Gifting</h3>
-              <p>A memorable and personal gift for loved ones.</p>
-            </div>
+          </div>
+          <div className={styles.valueGrid}>
+            {VALUES.map((v, i) => (
+              <div key={v.n} className={`${styles.valueItem} reveal`} style={{ transitionDelay: `${i * 0.07}s` }}>
+                <span className={styles.valueNum}>{v.n}</span>
+                <h3>{v.t}</h3>
+                <p>{v.d}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Bulk Order Section */}
-      <section id="bulk-orders" className={styles.section}>
-        <div className={`container ${styles.bulkGrid}`}>
-          <div className={styles.bulkText}>
-            <h2>Partner With Us</h2>
-            <p className="mt-md">We supply to boutiques, resellers and wedding planners globally. If you love our aesthetic and want to stock our handcrafted jewelry, get in touch.</p>
-            <ul className={`mt-sm ${styles.perksList}`}>
-              <li>✓ Special Wholesale Pricing</li>
-              <li>✓ Customization Options</li>
-              <li>✓ Reliable Shipping</li>
-            </ul>
-            <div className={`mt-md ${styles.contactDirect}`}>
-              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.8rem' }}>Direct Contact</h3>
-              <p style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center' }}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16" fill="currentColor" style={{ marginRight: '10px' }}>
-                  <path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z" />
-                </svg>
-                <a href="tel:+919104861625" style={{ textDecoration: 'none', color: 'inherit' }}>+91 9104861625</a>
-              </p>
-              <p style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center' }}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16" fill="currentColor" style={{ marginRight: '10px' }}>
-                  <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
-                </svg>
-                <a href="mailto:aayascreation@gmail.com" style={{ textDecoration: 'none', color: 'inherit' }}>aayascreation@gmail.com</a>
-              </p>
-              <p style={{ display: 'flex', alignItems: 'flex-start' }}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="16" height="16" fill="currentColor" style={{ marginRight: '10px', marginTop: '4px', minWidth: '16px' }}>
-                  <path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
-                </svg>
-                <span>Ahmedabad, Gujarat, India</span>
-              </p>
-            </div>
+      {/* ---------- WHOLESALE BAND ---------- */}
+      <section className="section">
+        <div className={`container ${styles.wholesale} reveal`}>
+          <div>
+            <p className="eyebrow">For Boutiques &amp; Resellers</p>
+            <h2 className={styles.wholesaleTitle}>Stock our handcrafted earrings.</h2>
+            <p className="mt-sm text-secondary" style={{ maxWidth: "48ch" }}>
+              We supply boutiques, resellers and wedding planners worldwide with special
+              wholesale pricing, customization, and reliable shipping.
+            </p>
           </div>
-          <div className={styles.bulkFormContainer}>
-            <BulkOrderForm className={styles.bulkForm} />
-          </div>
+          <Link href="/wholesale" className="btn-primary">
+            Partner With Us
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </Link>
         </div>
       </section>
-
-    </div>
+    </>
   );
 }
