@@ -23,7 +23,8 @@
   width: 100%;
   height: auto;
   border-radius: var(--radius-lg);
-  object-fit: cover;
+  object-fit: contain;
+  background: #fff;
   aspect-ratio: 4 / 5;
 }
 .introCopy h2 { font-size: var(--step-3); max-width: 16ch; }
