@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   description: "Discover truly unique, handcrafted artisan earrings by Aayas Creation. Ethnic and bohemian aesthetics crafted with soul.",
   keywords: "handmade earrings, artisan jewelry, boho earrings, ethnic jewelry, Indian handmade, jhumka earrings",
   alternates: { canonical: "/" },
+  verification: {
+    google: "7YySfTF3rHsKWdquAkoICLidqqcJYwTclIbRjqGZCMI",
+  },
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
@@ -39,7 +42,7 @@ export const metadata: Metadata = {
     title: "Aayas Creation | Handmade Artisan Earrings",
     description: "Handcrafted artisan earrings with ethnic and bohemian aesthetics, made with soul.",
     images: ["/logo.jpg"],
-  },
+  }
 };
 
 export default function RootLayout({
